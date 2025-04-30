@@ -5,13 +5,25 @@
 global _start ;standardna vhodna tocka
 
 section .data
-datoteka: db "28886_Dir",0 ;db - define byte.. Pisi 0 ker tak on ve da je konec niza
-dovoljenja_mkdir:equ 416 ; 3 skupine (user,group, others), nicla naj bo spredi spet.. r:4,w:2,x:1
+test: db "test",0
+ime_direktorija: db "28886_Dir",0 ;db - define byte.. Pisi 0 ker tak on ve da je konec niza
+dovoljenja_mkdir:equ 493 ; 3 skupine (user,group, others), nicla naj bo spredi spet.. r:4,w:2,x:1
 section .text
 _start: mov     eax, 0x27 ;mkdir
-        mov     ebx, datoteka 
+        mov     ebx, ime_direktorija 
         mov     ecx, dovoljenja_mkdir 
         int 0x80 ;VEDNO ko izvajas sistemski klic
+
+        ;Sprememba delovne poti
+        mov     eax, 0x0c ;chdir
+        mov     ebx, ime_direktorija
+        int 0x80
+
+        mov     eax, 0x27 ;mkdir
+        mov     ebx, test
+        mov     ecx, dovoljenja_mkdir 
+        int 0x80
+
 
         ; izhod iz programa
         mov eax, 0x01 ;stevilka za exit
