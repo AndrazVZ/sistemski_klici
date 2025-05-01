@@ -8,6 +8,12 @@ section .data
 test: db "test",0
 ime_direktorija: db "28886_Dir",0 ;db - define byte.. Pisi 0 ker tak on ve da je konec niza
 dovoljenja_mkdir:equ 493 ; 3 skupine (user,group, others), nicla naj bo spredi spet.. r:4,w:2,x:1
+
+ime_datoteke: db "28886_file.dat",0
+dovoljenja_dat:equ 416
+
+
+
 section .text
 _start: mov     eax, 0x27 ;mkdir
         mov     ebx, ime_direktorija 
@@ -18,10 +24,11 @@ _start: mov     eax, 0x27 ;mkdir
         mov     eax, 0x0c ;chdir
         mov     ebx, ime_direktorija
         int 0x80
-
-        mov     eax, 0x27 ;mkdir
-        mov     ebx, test
-        mov     ecx, dovoljenja_mkdir 
+        
+        ;naredi datoteko
+        mov     eax, 0x05
+        mov     ebx, ime_datoteke
+        mov     edx, dovoljenja_dat
         int 0x80
 
 
