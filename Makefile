@@ -10,5 +10,6 @@ run:
 	./sys_calls
 
 clean:
-	rm -f *.o sys_calls 28886_Dir 28886_Dir/28886_file.dat
+	rm -f *.o sys_calls 28886_Dir/28886_file.dat
+	rmdir 28886_Dir
 

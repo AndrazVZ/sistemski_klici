@@ -13,7 +13,7 @@ dovoljenja_mkdir:equ 493 ; 3 skupine (user,group, others), nicla naj bo spredi s
 ime_datoteke: db "28886_file.dat",0
 dovoljenja_dat:equ 416
 
-
+string_cas: db "00-00-00",0
 
 section .text
 _start: mov     eax, 0x27 ;mkdir
@@ -34,6 +34,18 @@ _start: mov     eax, 0x27 ;mkdir
         int 0x80
         mov     esi, eax ;shrani njen deskriptor(st.), da pol ve kam more pisat
 
+        ;cas
+        mov     eax, 0x0d ;time
+        xor     ebx, ebx  ;NULL
+        int 0x80
+        mov     ebx, eax ;shrani cas (v sek)
+
+        ;zapis v datoteko
+        mov     eax, 0x04 ;write
+        mov     ebx, esi  ;oni file deskriptor od prej
+        mov     ecx, string_cas
+        mov     edx, 8    ;dolzina
+        int 0x80
 
 
 
